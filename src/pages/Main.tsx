@@ -1,11 +1,30 @@
+import {
+  DndContext,
+  DragEndEvent,
+  DragOverlay,
+  DragStartEvent,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core'
+import clsx from 'clsx'
 import { useState } from 'react'
+import { Draggable } from '../components/dnd/Draggable'
+import { Droppable } from '../components/dnd/Droppable'
 import { Paper } from '../components/layout/Paper'
 import { TickerItem } from '../components/TickerItem'
 import { useTicker } from '../hooks/useTicker'
+import { Ticker } from '../types/common'
 
 export const Main = () => {
   const crypto = useTicker()
   const [displayedTickers, setDisplayedTickers] = useState(() => crypto.getTickers())
+  const [watchedTickers, setWatchedTickers] = useState<Ticker[]>([])
+
+  const [activeTicker, setActiveTicker] = useState<Ticker | null>(null)
+  const DRAGGING_ITEM_FILTER = (ticker: Ticker) => activeTicker?.symbol !== ticker.symbol
+  const WATCHED_ITEMS_FILTER = (ticker: Ticker) => !watchedTickers.find(wTicker => wTicker.symbol === ticker.symbol)
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
@@ -19,34 +38,110 @@ export const Main = () => {
     setDisplayedTickers(newTickers)
   }
 
-  return (
-    <div className='flex justify-center items-center flex-col h-screen p-4'>
-      <Paper className='w-[50svw] flex flex-col gap-4 max-h-[1000px] h-[100svh]'>
-        <p className='text-3xl'>Cryptocurrencies</p>
+  const handleDragEnd = (e: DragEndEvent) => {
+    const over = e.over?.id
 
-        <div className='flex justify-between mt-4 h-full gap-4 overflow-hidden'>
-          <div className='w-1/3 px-2 flex flex-col gap-2'>
-            <input
-              onChange={handleSearchChange}
-              className='w-full'
-              type='text'
-              placeholder='Enter display name / symbol'
-            />
-            <div className='flex flex-col h-full overflow-auto gap-1 py-2'>
-              {displayedTickers.map(ticker => (
-                <TickerItem
-                  key={ticker.symbol}
-                  displayName={ticker.displayName}
-                  ticker={ticker.symbol}
-                  price={ticker.price}
-                />
-              ))}
+    // Not over any droppable zone
+    if (!over) {
+      return
+    }
+
+    if (activeTicker) {
+      if (over === 'watched') {
+        setWatchedTickers(p => [...p, activeTicker])
+      }
+
+      if (over === 'unwatched') {
+        setWatchedTickers(p => p.filter(ticker => ticker.symbol !== activeTicker.symbol))
+      }
+      setActiveTicker(null)
+    }
+  }
+
+  const handleDragStart = (e: DragStartEvent) => {
+    setActiveTicker(crypto.findBySymbol(e.active.id as string)[0])
+  }
+
+  const sensors = useSensors(
+    useSensor(MouseSensor, {
+      activationConstraint: {
+        delay: 0,
+        tolerance: 8,
+      },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 80,
+        tolerance: 8,
+      },
+    })
+  )
+
+  return (
+    <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+      <DragOverlay className='z-[1000]'>
+        {activeTicker ? (
+          <TickerItem
+            key={activeTicker.symbol}
+            displayName={activeTicker.displayName}
+            ticker={activeTicker.symbol}
+            price={activeTicker.price}
+          />
+        ) : null}
+      </DragOverlay>
+
+      <div className='flex justify-center items-center flex-col h-screen p-4'>
+        <Paper className='w-[50svw] flex flex-col gap-4 max-h-[1000px] h-full'>
+          <p className='text-3xl'>Cryptocurrencies</p>
+
+          <div className='flex justify-between mt-4 h-full gap-4 overflow-hidden'>
+            <div className='w-1/3 px-2 flex flex-col gap-2 '>
+              <input
+                onChange={handleSearchChange}
+                className='w-full'
+                type='text'
+                placeholder='Enter display name / symbol'
+              />
+
+              <Droppable id='unwatched'>
+                <div className={'flex flex-col gap-1 py-2 px-4'}>
+                  {displayedTickers
+                    .filter(DRAGGING_ITEM_FILTER)
+                    .filter(WATCHED_ITEMS_FILTER)
+                    .map(ticker => (
+                      <Draggable id={ticker.symbol}>
+                        <TickerItem
+                          key={ticker.symbol}
+                          displayName={ticker.displayName}
+                          ticker={ticker.symbol}
+                          price={ticker.price}
+                        />
+                      </Draggable>
+                    ))}
+                </div>
+              </Droppable>
+            </div>
+
+            <div className='w-1/3 px-2'>
+              <Droppable id='watched'>
+                <div className={'w-full flex flex-col gap-1 overflow-auto py-2 px-4'}>
+                  {watchedTickers.length === 0 ? <span className={clsx('text-center')}>DROP HERE</span> : ''}
+                  {watchedTickers.map(ticker => (
+                    <Draggable id={ticker.symbol}>
+                      <TickerItem
+                        key={ticker.symbol}
+                        displayName={ticker.displayName}
+                        ticker={ticker.symbol}
+                        price={ticker.price}
+                      />
+                    </Draggable>
+                  ))}
+                </div>
+              </Droppable>
             </div>
           </div>
-
-          <div className='w-1/3 flex flex-col h-full overflow-auto gap-1 py-1'></div>
-        </div>
-      </Paper>
-    </div>
+        </Paper>
+      </div>
+    </DndContext>
   )
 }

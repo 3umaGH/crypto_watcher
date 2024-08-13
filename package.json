@@ -7,9 +7,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite --host"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.1.0",
     "axios": "^1.3.1",
     "clsx": "^2.1.1",
     "react": "^18.3.1",
