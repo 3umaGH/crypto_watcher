@@ -10,9 +10,7 @@ export const getTickers = (): Promise<AxiosResponse<getTickersAPIResponse, unkno
 
 export const getKLines = (
   symbol: string,
-  interval: CandlestickInterval,
-  startTime: number,
-  endTime: number
+  interval: CandlestickInterval
 ): Promise<AxiosResponse<KLineAPIResponse, unknown>> => {
-  return axios.get(`${BASE_URL}/klines?symbol=${symbol}&interval=${interval}&startTime=${startTime}&endTime=${endTime}`)
+  return axios.get(`${BASE_URL}/klines?symbol=${symbol}&interval=${interval}&limit=96`)
 }

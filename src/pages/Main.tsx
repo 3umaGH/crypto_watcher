@@ -86,6 +86,7 @@ export const Main = () => {
             displayName={activeTicker.displayName}
             ticker={activeTicker.symbol}
             price={activeTicker.price}
+            showChart={watchedTickers.includes(activeTicker)}
           />
         ) : null}
       </DragOverlay>
@@ -109,12 +110,12 @@ export const Main = () => {
                     .filter(DRAGGING_ITEM_FILTER)
                     .filter(WATCHED_ITEMS_FILTER)
                     .map(ticker => (
-                      <Draggable id={ticker.symbol}>
+                      <Draggable key={ticker.symbol} id={ticker.symbol}>
                         <TickerItem
-                          key={ticker.symbol}
                           displayName={ticker.displayName}
                           ticker={ticker.symbol}
                           price={ticker.price}
+                          showChart={false}
                         />
                       </Draggable>
                     ))}
@@ -127,12 +128,13 @@ export const Main = () => {
                 <div className={'w-full flex flex-col gap-1 overflow-auto py-2 px-4'}>
                   {watchedTickers.length === 0 ? <span className={clsx('text-center')}>DROP HERE</span> : ''}
                   {watchedTickers.map(ticker => (
-                    <Draggable id={ticker.symbol}>
+                    <Draggable key={ticker.symbol} id={ticker.symbol}>
                       <TickerItem
                         key={ticker.symbol}
                         displayName={ticker.displayName}
                         ticker={ticker.symbol}
                         price={ticker.price}
+                        showChart={true}
                       />
                     </Draggable>
                   ))}
