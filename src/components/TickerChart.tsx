@@ -75,7 +75,7 @@ export const TickerChart = memo((props: TickerChart) => {
             const { p0, p1 } = context
             return p1.y <= p0.y ? 'rgba(50,255,50,0.8)' : 'rgba(255,0,0,0.8)' // Green if increasing, red if decreasing
           },
-          borderWidth: 3,
+          borderWidth: 1.5,
         },
       },
     ],
