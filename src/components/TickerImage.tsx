@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CommonProps } from '../types/common'
 
 type TickerImage = {
@@ -10,6 +10,10 @@ const FALLBACK_ICON = 'icons/generic-cryptocurrency.svg'
 
 export const TickerLogo = (props: TickerImage) => {
   const [src, setSrc] = useState(`https://cryptofonts.com/img/SVG/${props.ticker.toLowerCase()}.svg`)
+
+  useEffect(() => {
+    setSrc(`https://cryptofonts.com/img/SVG/${props.ticker.toLowerCase()}.svg`)
+  }, [props.ticker])
 
   const handleFallbackImage = () => {
     setSrc(FALLBACK_ICON)
