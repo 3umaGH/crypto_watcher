@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
-import { TickerContext } from './context/tickerContext'
 import { getTickers } from './api/api'
+import { TickerItem } from './components/TickerItem'
+import { TickerContext } from './context/tickerContext'
 import { Ticker } from './types/common'
+import { getErrorMessage } from './util/util'
 
 const USDT_PAIR_FILTER = (ticker: Ticker) => ticker.symbol.endsWith('USDT')
 
@@ -15,11 +17,7 @@ function App() {
         setTickers(resp.data.filter(USDT_PAIR_FILTER))
       })
       .catch(err => {
-        if (err instanceof Error) {
-          setError(err.message)
-        } else {
-          setError('Unknown error occured.')
-        }
+        setError(getErrorMessage(err))
       })
   }
 
