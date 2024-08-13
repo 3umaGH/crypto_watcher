@@ -59,6 +59,28 @@ const OPTIONS = {
 }
 
 export const TickerChart = memo((props: TickerChart) => {
+  const data = {
+    labels: props.data.map(kline => kline.openTime),
+    datasets: [
+      {
+        label: '',
+        data: props.data.map(kline => kline.closePrice),
+        tension: 0,
+
+        borderColor: 'transparent',
+        backgroundColor: 'transparent',
+        fill: false,
+        segment: {
+          borderColor: function (context: { p0: { y: number }; p1: { y: number } }) {
+            const { p0, p1 } = context
+            return p1.y <= p0.y ? 'rgba(50,255,50,0.8)' : 'rgba(255,0,0,0.8)' // Green if increasing, red if decreasing
+          },
+          borderWidth: 3,
+        },
+      },
+    ],
+  }
+
   return (
     <div className='border bg-[#0E1318] h-[80px] w-full max-w-[100%] box-border rounded-md m-0 p-0 relative'>
       {props.isLoading && (
@@ -69,27 +91,7 @@ export const TickerChart = memo((props: TickerChart) => {
 
       <Chart
         type='line'
-        data={{
-          labels: props.data.map(kline => kline.openTime),
-          datasets: [
-            {
-              label: '',
-              data: props.data.map(kline => kline.closePrice),
-              tension: 0,
-
-              borderColor: 'transparent',
-              backgroundColor: 'transparent',
-              fill: false,
-              segment: {
-                borderColor: function (context) {
-                  const { p0, p1 } = context
-                  return p1.y <= p0.y ? 'rgba(50,255,50,0.8)' : 'rgba(255,0,0,0.8)' // Green if increasing, red if decreasing
-                },
-                borderWidth: 3,
-              },
-            },
-          ],
-        }}
+        data={data}
         options={{
           ...OPTIONS,
           plugins: {
