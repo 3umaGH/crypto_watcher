@@ -70,14 +70,14 @@ export const Main = () => {
   const sensors = useSensors(
     useSensor(MouseSensor, {
       activationConstraint: {
-        delay: 0,
-        tolerance: 8,
+        delay: 200,
+        tolerance: 10,
       },
     }),
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 80,
-        tolerance: 8,
+        delay: 200,
+        tolerance: 10,
       },
     })
   )
