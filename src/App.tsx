@@ -5,6 +5,7 @@ import cryptocurrencies from './crypto/cryptocurrencies.json'
 import { Main } from './pages/Main'
 import { Ticker } from './types/common'
 import { getErrorMessage } from './util/util'
+import { TICKER_UPDATE_INTERVAL_MS } from './config'
 
 const CRYPTO_NAMES: { [key: string]: string } = cryptocurrencies
 const USDT_PAIR_FILTER = (ticker: { symbol: string }) => ticker.symbol.endsWith('USDT')
@@ -23,6 +24,9 @@ function App() {
         }))
 
         setTickers(mappedTickers)
+        setError(null)
+
+        console.log('update')
       })
       .catch(err => {
         setError(getErrorMessage(err))
@@ -30,7 +34,11 @@ function App() {
   }
 
   useEffect(() => {
-    updateTickers()
+    updateTickers() // Initial fetch
+
+    const updateInterval = setInterval(() => updateTickers(), TICKER_UPDATE_INTERVAL_MS)
+
+    return () => clearInterval(updateInterval)
   }, [])
 
   if (error) {
@@ -51,6 +59,7 @@ function App() {
 
   return (
     <TickerContext.Provider value={{ tickers: tickers }}>
+      <button onClick={updateTickers}>asdf</button>
       <Main />
     </TickerContext.Provider>
   )

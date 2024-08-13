@@ -1,0 +1,1 @@
+export const TICKER_UPDATE_INTERVAL_MS = 3000
