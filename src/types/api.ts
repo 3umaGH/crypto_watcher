@@ -1,4 +1,2 @@
-import { Ticker } from './common'
-
-export type getTickersAPIResponse = Ticker[]
+export type getTickersAPIResponse = { symbol: string; price: string }[]
 export type KLineAPIResponse = (number | string)[][]
