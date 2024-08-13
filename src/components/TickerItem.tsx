@@ -7,7 +7,9 @@ type TickerItem = {
 }
 
 export const TickerItem = (props: TickerItem) => {
-  const convertedPrice = Number(props.price).toFixed(3)
+  const floatPrice = parseFloat(props.price)
+  const priceDecimals = floatPrice > 0.1 ? 2 : floatPrice > 0.0001 ? 4 : 7
+  const convertedPrice = Number(props.price).toFixed(priceDecimals)
   const mainSymbol = props.ticker.replace('USDT', '')
 
   return (
