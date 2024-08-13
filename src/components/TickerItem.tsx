@@ -1,0 +1,28 @@
+import { TickerLogo } from './TickerImage'
+
+type TickerItem = {
+  displayName: string | undefined
+  ticker: string
+  price: string
+}
+
+export const TickerItem = (props: TickerItem) => {
+  const convertedPrice = Number(props.price).toFixed(3)
+  const mainSymbol = props.ticker.replace('USDT', '')
+
+  return (
+    <div className='border shadow-sm flex items-center gap-2 overflow-hidden rounded-md min-w-[170px] p-2 shrink-0'>
+      <TickerLogo className='w-8 h-8 border rounded-full p-0.5' ticker={mainSymbol} />
+      <div className='flex flex-col md:text-xl'>
+        {props.displayName ? (
+          <div>
+            <span>{props.displayName}</span> <span className='text-sm text-gray-500 font-light'>({mainSymbol})</span>
+          </div>
+        ) : (
+          <span>{mainSymbol}</span>
+        )}
+        <span className='font-light'>${convertedPrice}</span>
+      </div>
+    </div>
+  )
+}
