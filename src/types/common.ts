@@ -1,3 +1,7 @@
+export type CommonProps = {
+  className?: string
+}
+
 export type CandlestickInterval =
   | '1s'
   | '1m'
