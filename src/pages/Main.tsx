@@ -24,6 +24,7 @@ export const Main = () => {
 
   const [activeTicker, setActiveTicker] = useState<Ticker | null>(null)
   const DRAGGING_ITEM_FILTER = (ticker: Ticker) => activeTicker?.symbol !== ticker.symbol
+  const DRAGGING_ITEM_FILTER_WATCHED = (wTick: string) => wTick !== activeTicker?.symbol
   const WATCHED_ITEMS_FILTER = (ticker: Ticker) => !watchedTickers.find(wTicker => wTicker === ticker.symbol)
 
   useEffect(() => {
@@ -51,7 +52,7 @@ export const Main = () => {
     }
 
     if (activeTicker) {
-      if (over === 'watched') {
+      if (over === 'watched' && !watchedTickers.includes(activeTicker.symbol)) {
         setWatchedTickers(p => [...p, activeTicker.symbol])
       }
 
@@ -90,7 +91,7 @@ export const Main = () => {
             displayName={activeTicker.displayName}
             ticker={activeTicker.symbol}
             price={activeTicker.price}
-            showChart={watchedTickers.includes(activeTicker.symbol)}
+            showChart={false}
           />
         ) : null}
       </DragOverlay>
@@ -132,7 +133,7 @@ export const Main = () => {
                 <div className={'w-full flex flex-col gap-1 overflow-y-auto py-2 px-4'}>
                   {watchedTickers.length === 0 ? <span className={clsx('text-center')}>DROP HERE</span> : ''}
 
-                  {watchedTickers.map(symbol => {
+                  {watchedTickers.filter(DRAGGING_ITEM_FILTER_WATCHED).map(symbol => {
                     const ticker = displayedTickers.find(dTicker => dTicker.symbol === symbol)
 
                     if (!ticker) {
