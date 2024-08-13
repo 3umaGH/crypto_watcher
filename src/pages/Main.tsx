@@ -8,10 +8,12 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core'
+import { arrayMove } from '@dnd-kit/sortable'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import { Draggable } from '../components/dnd/Draggable'
 import { Droppable } from '../components/dnd/Droppable'
+import { Sortable } from '../components/dnd/Sortable'
 import { Paper } from '../components/layout/Paper'
 import { TickerItem } from '../components/TickerItem/TickerItem'
 import { useTicker } from '../hooks/useTicker'
@@ -45,20 +47,26 @@ export const Main = () => {
 
   const handleDragEnd = (e: DragEndEvent) => {
     const over = e.over?.id
+    const active = e.active
 
     // Not over any droppable zone
-    if (!over) {
+    if (!over || !active) {
       return
     }
 
     if (activeTicker) {
       if (over === 'watched' && !watchedTickers.includes(activeTicker.symbol)) {
         setWatchedTickers(p => [...p, activeTicker.symbol])
+      } else if (over === 'unwatched') {
+        setWatchedTickers(p => p.filter(ticker => ticker !== activeTicker.symbol))
+      } else {
+        const activeIndex = watchedTickers.findIndex(ticker => ticker === active.id)
+        const overIndex = watchedTickers.findIndex(ticker => ticker === over)
+        const newItems = arrayMove(watchedTickers, activeIndex, overIndex)
+
+        setWatchedTickers(newItems)
       }
 
-      if (over === 'unwatched') {
-        setWatchedTickers(p => p.filter(ticker => ticker !== activeTicker.symbol))
-      }
       setActiveTicker(null)
     }
   }
@@ -141,15 +149,17 @@ export const Main = () => {
                     }
 
                     return (
-                      <Draggable key={ticker.symbol} id={ticker.symbol}>
-                        <TickerItem
-                          key={ticker.symbol}
-                          displayName={ticker.displayName}
-                          ticker={ticker.symbol}
-                          price={ticker.price}
-                          showChart={true}
-                        />
-                      </Draggable>
+                      <Sortable key={ticker.symbol} id={ticker.symbol}>
+                        <Draggable key={ticker.symbol} id={ticker.symbol}>
+                          <TickerItem
+                            key={ticker.symbol}
+                            displayName={ticker.displayName}
+                            ticker={ticker.symbol}
+                            price={ticker.price}
+                            showChart={true}
+                          />
+                        </Draggable>
+                      </Sortable>
                     )
                   })}
                 </div>
