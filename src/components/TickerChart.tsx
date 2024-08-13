@@ -106,7 +106,7 @@ export const TickerChart = memo((props: TickerChart) => {
 
                   return `${label} $${Number(value).toFixed(priceDecimals)}`
                 },
-                title: context => new Date(Number(context[0].label)).toLocaleTimeString(),
+                title: context => new Date(Number(context[0].label)).toLocaleString(),
               },
             },
           },
