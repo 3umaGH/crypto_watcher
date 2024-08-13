@@ -1,9 +1,9 @@
-import axios from 'axios'
-import { CandlestickInterval } from '../types/common'
+import axios, { AxiosResponse } from 'axios'
+import { CandlestickInterval, Ticker } from '../types/common'
 
 const BASE_URL = 'https://api.binance.com/api/v3'
 
-export const getTickers = () => {
+export const getTickers = (): Promise<AxiosResponse<Ticker[], unknown>> => {
   return axios.get(`${BASE_URL}/ticker/price`)
 }
 
