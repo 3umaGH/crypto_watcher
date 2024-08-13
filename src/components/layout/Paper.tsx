@@ -8,7 +8,7 @@ export const Paper = (props: Paper) => {
   return (
     <div
       className={clsx(
-        'border border-gray-200/80 bg-[#fafafa] rounded-md overflow-hidden drop-shadow-md p-2',
+        'border border-gray-200/80 bg-[#fafafa] rounded-md overflow-hidden drop-shadow-md p-4',
         props.className
       )}>
       {props.children}
