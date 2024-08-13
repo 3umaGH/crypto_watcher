@@ -25,14 +25,14 @@ export const Main = () => {
         <p className='text-3xl'>Cryptocurrencies</p>
 
         <div className='flex justify-between mt-4 h-full gap-4 overflow-hidden'>
-          <div className='w-1/3'>
+          <div className='w-1/3 px-2 flex flex-col gap-2'>
             <input
               onChange={handleSearchChange}
               className='w-full'
               type='text'
               placeholder='Enter display name / symbol'
             />
-            <div className='flex flex-col h-full overflow-auto gap-1 py-1'>
+            <div className='flex flex-col h-full overflow-auto gap-1 py-2'>
               {displayedTickers.map(ticker => (
                 <TickerItem
                   key={ticker.symbol}
