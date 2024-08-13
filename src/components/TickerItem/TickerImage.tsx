@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
-import { CommonProps } from '../types/common'
+import { CommonProps } from '../../types/common'
 
 type TickerImage = {
   ticker: string

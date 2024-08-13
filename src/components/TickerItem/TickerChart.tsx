@@ -10,7 +10,7 @@ import {
 } from 'chart.js'
 import { memo } from 'react'
 import { Chart } from 'react-chartjs-2'
-import { CommonProps, KLine } from '../types/common'
+import { CommonProps, KLine } from '../../types/common'
 
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend)
 

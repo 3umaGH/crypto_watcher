@@ -1,11 +1,11 @@
 import clsx from 'clsx'
 import { memo, useEffect, useState } from 'react'
-import { getKLines } from '../api/api'
-import { CandlestickInterval, CommonProps, KLine } from '../types/common'
-import { mapKlineResponse } from '../util/mapper'
+import { getKLines } from '../../api/api'
+import { CandlestickInterval, CommonProps, KLine } from '../../types/common'
+import { mapKlineResponse } from '../../util/mapper'
 import { TickerChart } from './TickerChart'
 import { TickerLogo } from './TickerImage'
-import { getErrorMessage } from '../util/util'
+import { getErrorMessage } from '../../util/util'
 
 type TickerItem = {
   displayName: string | null

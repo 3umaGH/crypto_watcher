@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react'
 import { Draggable } from '../components/dnd/Draggable'
 import { Droppable } from '../components/dnd/Droppable'
 import { Paper } from '../components/layout/Paper'
-import { TickerItem } from '../components/TickerItem'
+import { TickerItem } from '../components/TickerItem/TickerItem'
 import { useTicker } from '../hooks/useTicker'
 import { Ticker } from '../types/common'
 
