@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { getTickers } from './api/api'
 import { TickerContext } from './context/tickerContext'
 import cryptocurrencies from './crypto/cryptocurrencies.json'
+import { Main } from './pages/Main'
 import { Ticker } from './types/common'
 import { getErrorMessage } from './util/util'
 
@@ -18,7 +19,7 @@ function App() {
         const filteredTickers = resp.data.filter(USDT_PAIR_FILTER)
         const mappedTickers = filteredTickers.map(ticker => ({
           ...ticker,
-          displayName: CRYPTO_NAMES[ticker.symbol.replace('USDT', '')],
+          displayName: CRYPTO_NAMES[ticker.symbol.replace('USDT', '')] ?? null,
         }))
 
         setTickers(mappedTickers)
@@ -33,12 +34,24 @@ function App() {
   }, [])
 
   if (error) {
-    return <p className='text-red-800 text-center'>Error occured: {error}</p>
+    return (
+      <div className='flex h-screen items-center justify-center'>
+        <p className='text-red-800'>Error occured: {error}</p>
+      </div>
+    )
+  }
+
+  if (tickers.length === 0) {
+    return (
+      <div className='flex h-screen items-center justify-center'>
+        <p>Loading...</p>
+      </div>
+    )
   }
 
   return (
     <TickerContext.Provider value={{ tickers: tickers }}>
-      <div>App</div>
+      <Main />
     </TickerContext.Provider>
   )
 }
