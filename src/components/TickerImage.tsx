@@ -19,5 +19,7 @@ export const TickerLogo = (props: TickerImage) => {
     setSrc(FALLBACK_ICON)
   }
 
-  return <img className={clsx(props.className)} alt={props.ticker} src={src} onError={handleFallbackImage} />
+  return (
+    <img loading='lazy' className={clsx(props.className)} alt={props.ticker} src={src} onError={handleFallbackImage} />
+  )
 }
