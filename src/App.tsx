@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { getTickers } from './api/api'
-import { TickerItem } from './components/TickerItem'
 import { TickerContext } from './context/tickerContext'
 import { Ticker } from './types/common'
 import { getErrorMessage } from './util/util'
@@ -30,9 +29,11 @@ function App() {
   }
 
   return (
-    <TickerContext.Provider value={{ tickers: tickers }}>
-      <div>App</div>
-    </TickerContext.Provider>
+    <div className='font-anek'>
+      <TickerContext.Provider value={{ tickers: tickers }}>
+        <div>App</div>
+      </TickerContext.Provider>
+    </div>
   )
 }
 
