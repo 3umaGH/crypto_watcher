@@ -29,11 +29,9 @@ function App() {
   }
 
   return (
-    <div className='font-anek'>
-      <TickerContext.Provider value={{ tickers: tickers }}>
-        <div>App</div>
-      </TickerContext.Provider>
-    </div>
+    <TickerContext.Provider value={{ tickers: tickers }}>
+      <div>App</div>
+    </TickerContext.Provider>
   )
 }
 
