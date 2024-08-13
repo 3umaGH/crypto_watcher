@@ -7,6 +7,11 @@ export const getTickers = (): Promise<AxiosResponse<Ticker[], unknown>> => {
   return axios.get(`${BASE_URL}/ticker/price`)
 }
 
-export const getKLines = (symbol: string, interval: CandlestickInterval, startTime: number, endTime: number) => {
+export const getKLines = (
+  symbol: string,
+  interval: CandlestickInterval,
+  startTime: number,
+  endTime: number
+): Promise<AxiosResponse<(number | string)[][], unknown>> => {
   return axios.get(`${BASE_URL}/klines?symbol=${symbol}&interval=${interval}&startTime=${startTime}&endTime=${endTime}`)
 }

@@ -17,3 +17,16 @@ export type CandlestickInterval =
   | '1M'
 
 export type Ticker = { symbol: string; price: string }
+export type KLine = {
+  openTime: number
+  openPrice: string
+  highPrice: string
+  lowPrice: string
+  closePrice: string
+  volume: string
+  closeTime: number
+  quoteAssetVol: string
+  numberOfTrades: number
+  takerBuyBaseAssetVol: string
+  takerBuyQuoteAssetVol: string
+}
