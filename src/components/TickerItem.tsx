@@ -1,7 +1,7 @@
 import { TickerLogo } from './TickerImage'
 
 type TickerItem = {
-  displayName: string | undefined
+  displayName: string | null
   ticker: string
   price: string
 }

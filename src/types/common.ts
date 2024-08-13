@@ -20,7 +20,7 @@ export type CandlestickInterval =
   | '1w'
   | '1M'
 
-export type Ticker = { symbol: string; displayName: string; price: string }
+export type Ticker = { symbol: string; displayName: string | null; price: string }
 export type KLine = {
   openTime: number
   openPrice: string
