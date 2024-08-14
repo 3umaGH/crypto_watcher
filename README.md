@@ -1,51 +1,22 @@
-# React + TypeScript + Vite
+## Cryptocurrency Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project provides functionality to manage and visualize cryptocurrency data, featuring:
 
-Currently, two official plugins are available:
+1. **Cryptocurrency List**: Displays a list of cryptocurrencies along with their current prices. Users can:
+   - **Search**: Filter cryptocurrencies by name or symbol.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. **Watched Currencies List**: Allows users to select and monitor specific cryptocurrencies. Each entry displays a detailed candlestick chart showing the historical performance of the selected cryptocurrency. Features include:
+   - **Drag and Drop Sorting**: Manually reorder cryptocurrencies in the watched list.
+   - **Chart Intervals**: Support for various candlestick chart intervals (e.g., 1-minute, 5-minute, hourly, daily) to view different levels of detail in historical data.
 
-## Expanding the ESLint configuration
+### Key Features
+- **Search Functionality**: Quickly filter the cryptocurrency list to find desired entries.
+- **Drag and Drop**: Move cryptocurrencies between watched and unwatched lists by dragging them.
+- **Candlestick Charts**: Visualize historical data for cryptocurrencies in the watched list with customizable intervals.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Note on State Management
 
-- Configure the top-level `parserOptions` property like this:
+For larger projects, I would suggest using Redux for state management. Currently, this project uses Context API.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
-# crypto_watcher
+**Stack:** React, dnd-kit, Axios, Chart.js, Tailwind CSS  
+**Preview Link:** [https://crypto-watcher-alpha.vercel.app/](https://crypto-watcher-alpha.vercel.app/)
