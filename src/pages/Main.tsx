@@ -76,7 +76,6 @@ export const Main = () => {
       }
 
       setActiveTicker(null)
-      console.log(over)
     }
   }
 
