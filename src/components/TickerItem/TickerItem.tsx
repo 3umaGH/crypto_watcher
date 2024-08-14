@@ -69,7 +69,7 @@ export const TickerItem = memo((props: TickerItem) => {
       )}>
       <div className={`flex gap-1 col-span-1 `}>
         <TickerLogo className='w-8 h-8 border rounded-full p-0.5' ticker={mainSymbol} />
-        <div className='flex flex-col w-full md:text-xl whitespace-nowrap '>
+        <div className='flex flex-col w-full text-sm md:text-xl whitespace-nowrap '>
           <div className='flex w-full '>
             {props.displayName ? (
               <div>
