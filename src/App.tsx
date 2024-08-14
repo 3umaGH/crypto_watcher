@@ -12,6 +12,7 @@ const USDT_PAIR_FILTER = (ticker: { symbol: string }) => ticker.symbol.endsWith(
 
 function App() {
   const [tickers, setTickers] = useState<Ticker[]>([])
+  const [watchedTickers, setWatchedTickers] = useState<string[]>([])
   const [error, setError] = useState<null | string>(null)
 
   const updateTickers = () => {
@@ -43,7 +44,7 @@ function App() {
 
   if (error) {
     return (
-      <div className='flex h-screen items-center justify-center'>
+      <div className='flex items-center justify-center h-screen'>
         <p className='text-red-800'>Error occured: {error}</p>
       </div>
     )
@@ -51,14 +52,15 @@ function App() {
 
   if (tickers.length === 0) {
     return (
-      <div className='flex h-screen items-center justify-center'>
+      <div className='flex items-center justify-center h-screen'>
         <p>Loading...</p>
       </div>
     )
   }
 
   return (
-    <TickerContext.Provider value={{ tickers: tickers }}>
+    <TickerContext.Provider
+      value={{ tickers: tickers, watchedTickers: watchedTickers, setWatchedTickers: setWatchedTickers }}>
       <button onClick={updateTickers}>asdf</button>
       <Main />
     </TickerContext.Provider>

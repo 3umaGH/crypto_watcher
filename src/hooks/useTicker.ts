@@ -6,10 +6,14 @@ const NAME_FILTER = (ticker: Ticker, query: string) => ticker.displayName?.toLow
 const SYMBOL_FILTER = (ticker: Ticker, query: string) => ticker.symbol.toLowerCase().startsWith(query.toLowerCase())
 
 export const useTicker = () => {
-  const { tickers } = useContext(TickerContext)
+  const { tickers, watchedTickers, setWatchedTickers } = useContext(TickerContext)
 
   const getTickers = () => {
     return tickers
+  }
+
+  const getWatchedTickers = () => {
+    return watchedTickers
   }
 
   const findByDisplayName = (query: string) => {
@@ -26,5 +30,5 @@ export const useTicker = () => {
     })
   }
 
-  return { getTickers, findByDisplayName, findBySymbol, find }
+  return { getTickers, getWatchedTickers, setWatchedTickers, findByDisplayName, findBySymbol, find }
 }
