@@ -1,6 +1,6 @@
 import { useSortable } from '@dnd-kit/sortable'
-import { CommonProps } from '@mui/material/OverridableComponent'
 import { ReactNode } from 'react'
+import { CommonProps } from '../../types/common'
 
 type SortableT = {
   id: string
