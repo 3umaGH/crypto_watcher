@@ -46,7 +46,7 @@ export const Main = () => {
     const active = e.active
 
     // Not over any droppable zone
-    if (!over || !active) {
+    if (!active) {
       return
     }
 
@@ -160,8 +160,8 @@ export const Main = () => {
                 placeholder='Enter display name / symbol'
               />
 
-              <Droppable id='unwatched'>
-                <div className={'flex flex-row flex-wrap overflow-visible gap-1 justify-center'}>
+              <Droppable id='unwatched' className='min-h-[500px]'>
+                <div className={'flex flex-row flex-wrap overflow-visible gap-1 justify-center '}>
                   {(searchQuery ? crypto.find(searchQuery) : crypto.getTickers())
                     .filter(DRAGGING_ITEM_FILTER)
                     .filter(WATCHED_ITEMS_FILTER)
