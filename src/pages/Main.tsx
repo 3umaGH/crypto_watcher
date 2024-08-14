@@ -76,6 +76,7 @@ export const Main = () => {
       }
 
       setActiveTicker(null)
+      console.log(over)
     }
   }
 
@@ -103,6 +104,7 @@ export const Main = () => {
       <DragOverlay className='z-[1000]'>
         {activeTicker ? (
           <TickerItem
+            className='max-w-[300px]'
             displayName={activeTicker.displayName}
             ticker={activeTicker.symbol}
             price={activeTicker.price}
@@ -112,10 +114,10 @@ export const Main = () => {
       </DragOverlay>
 
       <div className='flex flex-col items-center justify-center h-screen p-2 lg:p-4'>
-        <Paper className='w-full lg:w-[50svw] flex flex-col gap-4 max-h-[1000px] h-full'>
-          <p className='text-xl lg:text-3xl'>Cryptocurrencies</p>
+        <Paper className='w-full xl:w-[50svw] flex flex-col gap-4 max-h-[1000px] h-full'>
+          <p className='text-xl xl:text-3xl'>Cryptocurrencies</p>
 
-          <div className='-mt-4 lg:mt-0'>
+          <div className='-mt-4 xl:mt-0'>
             <Droppable id='watched'>
               <div className={'w-full flex flex-row gap-1 overflow-y-auto py-2'}>
                 {crypto.getWatchedTickers().length === 0 && <span className={'text-center w-full'}>DROP HERE</span>}
@@ -160,13 +162,14 @@ export const Main = () => {
               />
 
               <Droppable id='unwatched'>
-                <div className={'flex flex-col overflow-y-auto gap-1'}>
+                <div className={'flex flex-row flex-wrap overflow-visible gap-1 justify-center'}>
                   {(searchQuery ? crypto.find(searchQuery) : crypto.getTickers())
                     .filter(DRAGGING_ITEM_FILTER)
                     .filter(WATCHED_ITEMS_FILTER)
                     .map(ticker => (
                       <Draggable key={ticker.symbol} id={ticker.symbol}>
                         <TickerItem
+                          className='w-[250px] md:w-[300px] overflow-hidden'
                           displayName={ticker.displayName}
                           ticker={ticker.symbol}
                           price={ticker.price}
