@@ -64,17 +64,17 @@ export const TickerItem = memo((props: TickerItem) => {
   return (
     <div
       className={clsx(
-        'border shadow-sm grid grid-cols-1 gap-2 overflow-visible rounded-md min-w-[170px]  p-2 shrink-0 bg-white',
+        'border shadow-sm grid grid-cols-1 gap-2 overflow-visible rounded-md min-w-[170px] p-2 shrink-0 bg-white',
         props.className
       )}>
       <div className={`flex gap-1 col-span-1`}>
         <TickerLogo className='w-8 h-8 border rounded-full p-0.5' ticker={mainSymbol} />
-        <div className='flex flex-col md:text-xl whitespace-nowrap w-full'>
-          <div className='w-full flex'>
+        <div className='flex flex-col w-full md:text-xl whitespace-nowrap'>
+          <div className='flex w-full'>
             {props.displayName ? (
               <div>
                 <span>{props.displayName}</span>{' '}
-                <span className='text-sm text-gray-500 font-light'>({mainSymbol})</span>
+                <span className='text-sm font-light text-gray-500'>({mainSymbol})</span>
               </div>
             ) : (
               <span>{mainSymbol}</span>
@@ -96,7 +96,7 @@ export const TickerItem = memo((props: TickerItem) => {
       </div>
 
       {props.showChart && (
-        <div className='col-span-1 flex justify-center items-center flex-col w-full border-md overflow-hidden'>
+        <div className='flex flex-col items-center justify-center w-full col-span-1 overflow-hidden border-md'>
           {error ? (
             <span className='text-red-700'>Chart: {error}</span>
           ) : (

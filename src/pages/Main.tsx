@@ -9,7 +9,6 @@ import {
   useSensors,
 } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
-import clsx from 'clsx'
 import { useState } from 'react'
 import { Draggable } from '../components/dnd/Draggable'
 import { Droppable } from '../components/dnd/Droppable'
@@ -104,7 +103,6 @@ export const Main = () => {
       <DragOverlay className='z-[1000]'>
         {activeTicker ? (
           <TickerItem
-            key={activeTicker.symbol}
             displayName={activeTicker.displayName}
             ticker={activeTicker.symbol}
             price={activeTicker.price}
@@ -117,17 +115,52 @@ export const Main = () => {
         <Paper className='w-[50svw] flex flex-col gap-4 max-h-[1000px] h-full'>
           <p className='text-3xl'>Cryptocurrencies</p>
 
-          <div className='flex justify-between h-full gap-4 mt-4 overflow-hidden'>
-            <div className='flex flex-col w-1/3 gap-2 px-2 '>
+          <div>
+            <Droppable id='watched'>
+              <div className={'w-full flex flex-row gap-1 overflow-y-auto py-2'}>
+                {crypto.getWatchedTickers().length === 0 && <span className={'text-center w-full'}>DROP HERE</span>}
+
+                {crypto
+                  .getWatchedTickers()
+                  .filter(DRAGGING_ITEM_FILTER_WATCHED)
+                  .map(symbol => {
+                    const ticker = crypto.getTickers().find(dTicker => dTicker.symbol === symbol)
+
+                    if (!ticker) {
+                      return
+                    }
+
+                    return (
+                      <Sortable key={ticker.symbol} id={ticker.symbol}>
+                        <Draggable id={ticker.symbol}>
+                          <TickerItem
+                            className='min-w-[200px] md:min-w-[300px]'
+                            displayName={ticker.displayName}
+                            ticker={ticker.symbol}
+                            price={ticker.price}
+                            showChart={true}
+                          />
+                        </Draggable>
+                      </Sortable>
+                    )
+                  })}
+              </div>
+            </Droppable>
+          </div>
+
+          <div className='min-h-[1px] bg-gray-200' />
+
+          <div className='flex flex-col gap-4 overflow-hidden'>
+            <div className='flex flex-col w-full h-full gap-2'>
               <input
                 onChange={handleSearchChange}
-                className='w-full'
+                className='block w-full p-2 pt-3 text-sm text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500'
                 type='text'
                 placeholder='Enter display name / symbol'
               />
 
               <Droppable id='unwatched'>
-                <div className={'flex flex-col overflow-y-auto gap-1 py-2 px-4'}>
+                <div className={'flex flex-col overflow-y-auto gap-1'}>
                   {(searchQuery ? crypto.find(searchQuery) : crypto.getTickers())
                     .filter(DRAGGING_ITEM_FILTER)
                     .filter(WATCHED_ITEMS_FILTER)
@@ -141,39 +174,6 @@ export const Main = () => {
                         />
                       </Draggable>
                     ))}
-                </div>
-              </Droppable>
-            </div>
-
-            <div className='w-1/3 px-2'>
-              <Droppable id='watched'>
-                <div className={'w-full flex flex-col gap-1 overflow-y-auto py-2 px-4'}>
-                  {crypto.getWatchedTickers().length === 0 && <span className={clsx('text-center')}>DROP HERE</span>}
-
-                  {crypto
-                    .getWatchedTickers()
-                    .filter(DRAGGING_ITEM_FILTER_WATCHED)
-                    .map(symbol => {
-                      const ticker = crypto.getTickers().find(dTicker => dTicker.symbol === symbol)
-
-                      if (!ticker) {
-                        return
-                      }
-
-                      return (
-                        <Sortable key={ticker.symbol} id={ticker.symbol}>
-                          <Draggable key={ticker.symbol} id={ticker.symbol}>
-                            <TickerItem
-                              key={ticker.symbol}
-                              displayName={ticker.displayName}
-                              ticker={ticker.symbol}
-                              price={ticker.price}
-                              showChart={true}
-                            />
-                          </Draggable>
-                        </Sortable>
-                      )
-                    })}
                 </div>
               </Droppable>
             </div>
