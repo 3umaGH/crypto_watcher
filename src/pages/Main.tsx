@@ -111,11 +111,11 @@ export const Main = () => {
         ) : null}
       </DragOverlay>
 
-      <div className='flex flex-col items-center justify-center h-screen p-4'>
-        <Paper className='w-[50svw] flex flex-col gap-4 max-h-[1000px] h-full'>
-          <p className='text-3xl'>Cryptocurrencies</p>
+      <div className='flex flex-col items-center justify-center h-screen p-2 lg:p-4'>
+        <Paper className='w-full lg:w-[50svw] flex flex-col gap-4 max-h-[1000px] h-full'>
+          <p className='text-xl lg:text-3xl'>Cryptocurrencies</p>
 
-          <div>
+          <div className='-mt-4 lg:mt-0'>
             <Droppable id='watched'>
               <div className={'w-full flex flex-row gap-1 overflow-y-auto py-2'}>
                 {crypto.getWatchedTickers().length === 0 && <span className={'text-center w-full'}>DROP HERE</span>}
