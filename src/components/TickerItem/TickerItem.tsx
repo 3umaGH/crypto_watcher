@@ -84,7 +84,9 @@ export const TickerItem = memo((props: TickerItem) => {
               <div className='ml-auto text-sm'>
                 <select onChange={handleIntervalChange} value={kLinesInterval}>
                   {CANDLESTICK_INTERVALS.map(int => (
-                    <option value={int}>{int}</option>
+                    <option key={int} value={int}>
+                      {int}
+                    </option>
                   ))}
                 </select>
               </div>
