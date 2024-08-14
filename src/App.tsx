@@ -59,7 +59,6 @@ function App() {
   return (
     <TickerContext.Provider
       value={{ tickers: tickers, watchedTickers: watchedTickers, setWatchedTickers: setWatchedTickers }}>
-      <button onClick={updateTickers}>asdf</button>
       <Main />
     </TickerContext.Provider>
   )
