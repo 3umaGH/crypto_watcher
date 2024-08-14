@@ -50,18 +50,31 @@ export const Main = () => {
 
     if (activeTicker) {
       if (over === 'watched' && !crypto.getWatchedTickers().includes(activeTicker.symbol)) {
+        // On dragging from unwatched => watched tickers droppable zone
         crypto.setWatchedTickers(p => [...p, activeTicker.symbol])
       } else if (over === 'unwatched') {
+        // On dragging from watched => unwatched tickers droppable zone
         crypto.setWatchedTickers(p => p.filter(ticker => ticker !== activeTicker.symbol))
       } else {
-        const activeIndex = crypto.getWatchedTickers().findIndex(ticker => ticker === active.id)
         const overIndex = crypto.getWatchedTickers().findIndex(ticker => ticker === over)
-        const newItems = arrayMove(crypto.getWatchedTickers(), activeIndex, overIndex)
+        const activeIndex = crypto.getWatchedTickers().findIndex(ticker => ticker === active.id)
 
-        crypto.setWatchedTickers(newItems)
+        if (activeIndex !== -1) {
+          // On dragging watched items inside of watched droppable zone (sorting)
+          crypto.setWatchedTickers(arrayMove(crypto.getWatchedTickers(), activeIndex, overIndex))
+        } else {
+          // On dragging from unwatched => watched tickers, but inserting item between other items
+
+          crypto.setWatchedTickers(p => {
+            const newItems = [...p]
+            newItems.splice(overIndex, 0, activeTicker.symbol)
+            return newItems
+          })
+        }
       }
 
-      console.log(over)
+      console.log('active', active)
+      console.log('over', over)
 
       setActiveTicker(null)
     }
