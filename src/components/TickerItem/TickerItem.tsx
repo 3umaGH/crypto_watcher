@@ -64,13 +64,13 @@ export const TickerItem = memo((props: TickerItem) => {
   return (
     <div
       className={clsx(
-        'border shadow-sm grid grid-cols-1 gap-2 overflow-visible rounded-md min-w-[170px] p-2 shrink-0 bg-white',
+        'border shadow-sm grid grid-cols-1 gap-2 rounded-md min-w-[170px] p-2 shrink-0 bg-white',
         props.className
       )}>
-      <div className={`flex gap-1 col-span-1`}>
+      <div className={`flex gap-1 col-span-1 `}>
         <TickerLogo className='w-8 h-8 border rounded-full p-0.5' ticker={mainSymbol} />
-        <div className='flex flex-col w-full md:text-xl whitespace-nowrap'>
-          <div className='flex w-full'>
+        <div className='flex flex-col w-full md:text-xl whitespace-nowrap '>
+          <div className='flex w-full '>
             {props.displayName ? (
               <div>
                 <span>{props.displayName}</span>{' '}
