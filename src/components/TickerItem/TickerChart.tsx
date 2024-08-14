@@ -1,3 +1,4 @@
+import { TooltipItem } from 'chart.js'
 import { memo } from 'react'
 import { Chart } from 'react-chartjs-2'
 import { CommonProps, KLine } from '../../types/common'
@@ -44,6 +45,24 @@ const OPTIONS = {
       },
     },
   },
+  plugins: {
+    tooltip: {
+      callbacks: {
+        label: (context: TooltipItem<'line'>) => {
+          const kline = context.raw as KLine
+
+          const floatPrice = parseFloat(kline.closePrice)
+          const priceDecimals = floatPrice > 0.1 ? 2 : floatPrice > 0.0001 ? 4 : 7
+
+          return [
+            `Price: $${floatPrice.toFixed(priceDecimals)} / Vol: ${Number(kline.volume).toFixed(1)}`,
+            `Number of trades: ${Number(kline.numberOfTrades).toLocaleString()}`,
+          ]
+        },
+        title: (context: TooltipItem<'line'>[]) => new Date(Number(context[0].label)).toLocaleString(),
+      },
+    },
+  },
 }
 
 export const TickerChart = memo((props: TickerChart) => {
@@ -52,9 +71,12 @@ export const TickerChart = memo((props: TickerChart) => {
     datasets: [
       {
         label: '',
-        data: props.data.map(kline => kline.closePrice),
+        data: props.data.map(kline => ({
+          x: kline.closeTime,
+          y: kline.closePrice,
+          ...kline,
+        })),
         tension: 0,
-
         borderColor: 'transparent',
         backgroundColor: 'transparent',
         fill: false,
@@ -77,29 +99,7 @@ export const TickerChart = memo((props: TickerChart) => {
         </span>
       )}
 
-      <Chart
-        type='line'
-        data={data}
-        options={{
-          ...OPTIONS,
-          plugins: {
-            tooltip: {
-              callbacks: {
-                label: context => {
-                  const label = context.dataset.label || ''
-                  const value = context.raw
-
-                  const floatPrice = parseFloat(String(context.raw))
-                  const priceDecimals = floatPrice > 0.1 ? 2 : floatPrice > 0.0001 ? 4 : 7
-
-                  return `${label} $${Number(value).toFixed(priceDecimals)}`
-                },
-                title: context => new Date(Number(context[0].label)).toLocaleString(),
-              },
-            },
-          },
-        }}
-      />
+      <Chart type='line' data={data} options={OPTIONS} />
     </div>
   )
 })
