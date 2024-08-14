@@ -62,6 +62,20 @@ const OPTIONS = {
         title: (context: TooltipItem<'line'>[]) => new Date(Number(context[0].label)).toLocaleString(),
       },
     },
+    zoom: {
+      pan: {
+        enabled: true,
+        mode: 'xy' as const,
+      },
+      zoom: {
+        wheel: {
+          enabled: true,
+        },
+        pinch: {
+          enabled: true,
+        },
+      },
+    },
   },
 }
 
