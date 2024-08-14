@@ -22,10 +22,13 @@ import { Ticker } from '../types/common'
 export const Main = () => {
   const crypto = useTicker()
   const [searchQuery, setSearchQuery] = useState<string | null>(null)
-  const [activeTicker, setActiveTicker] = useState<Ticker | null>(null)
+  const [activeTicker, setActiveTicker] = useState<Ticker | null>(null) // Dragged item
 
+  // Filters out item that is currently dragged
   const DRAGGING_ITEM_FILTER = (ticker: Ticker) => activeTicker?.symbol !== ticker.symbol
+  // Filters out item that is currently dragged (but used for filtering from watchedTickers which is string[])
   const DRAGGING_ITEM_FILTER_WATCHED = (wTick: string) => wTick !== activeTicker?.symbol
+  // Filters out tickers that exist in watchedTickers: string[]
   const WATCHED_ITEMS_FILTER = (ticker: Ticker) =>
     !crypto.getWatchedTickers().find(wTicker => wTicker === ticker.symbol)
 
@@ -72,9 +75,6 @@ export const Main = () => {
           })
         }
       }
-
-      console.log('active', active)
-      console.log('over', over)
 
       setActiveTicker(null)
     }

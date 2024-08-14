@@ -26,8 +26,6 @@ function App() {
 
         setTickers(mappedTickers)
         setError(null)
-
-        console.log('update')
       })
       .catch(err => {
         setError(getErrorMessage(err))
