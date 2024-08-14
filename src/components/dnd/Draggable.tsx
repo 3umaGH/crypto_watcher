@@ -13,7 +13,7 @@ export const Draggable = (props: DraggableT) => {
   })
 
   return (
-    <div ref={setNodeRef} style={{ userSelect: 'none' }} {...listeners} {...attributes}>
+    <div className={props.className} ref={setNodeRef} style={{ userSelect: 'none' }} {...listeners} {...attributes}>
       {props.children}
     </div>
   )

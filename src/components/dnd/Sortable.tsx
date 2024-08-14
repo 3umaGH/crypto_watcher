@@ -11,7 +11,7 @@ export const Sortable = (props: SortableT) => {
   const { attributes, listeners, setNodeRef } = useSortable({ id: props.id })
 
   return (
-    <div ref={setNodeRef} {...attributes} {...listeners} {...props}>
+    <div className={props.className} ref={setNodeRef} {...attributes} {...listeners} {...props}>
       {props.children}
     </div>
   )

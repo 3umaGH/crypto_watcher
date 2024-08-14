@@ -20,7 +20,7 @@ export const Droppable = (props: DroppableT) => {
   }
 
   return (
-    <div ref={setNodeRef} style={style}>
+    <div className={props.className} ref={setNodeRef} style={style}>
       {props.children}
     </div>
   )
