@@ -1,5 +1,5 @@
-import { TooltipItem } from 'chart.js'
-import { memo } from 'react'
+import { Chart as ChartJS, TooltipItem } from 'chart.js'
+import { memo, useRef } from 'react'
 import { Chart } from 'react-chartjs-2'
 import { CommonProps, KLine } from '../../types/common'
 
@@ -80,6 +80,7 @@ const OPTIONS = {
 }
 
 export const TickerChart = memo((props: TickerChart) => {
+  const chartRef = useRef<ChartJS<'line', unknown>>(null)
   const data = {
     labels: props.data.map(kline => kline.openTime),
     datasets: [
@@ -113,7 +114,7 @@ export const TickerChart = memo((props: TickerChart) => {
         </span>
       )}
 
-      <Chart type='line' data={data} options={OPTIONS} />
+      <Chart ref={chartRef} type='line' data={data} options={OPTIONS} onClick={() => chartRef.current?.resetZoom()} />
     </div>
   )
 })
