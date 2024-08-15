@@ -81,7 +81,7 @@ export const TickerItem = memo((props: TickerItem) => {
             )}
 
             {props.showChart && (
-              <div className='ml-auto text-sm'>
+              <div className='ml-auto text-sm z-[1]'>
                 <select onChange={handleIntervalChange} value={kLinesInterval}>
                   {CANDLESTICK_INTERVALS.map(int => (
                     <option key={int} value={int}>
@@ -98,7 +98,7 @@ export const TickerItem = memo((props: TickerItem) => {
       </div>
 
       {props.showChart && (
-        <div className='flex flex-col items-center justify-center w-full col-span-1 overflow-hidden border-md'>
+        <div className='flex flex-col items-center justify-center w-full col-span-1 overflow-hidden border-md z-[1]'>
           {error ? (
             <span className='text-red-700'>Chart: {error}</span>
           ) : (
