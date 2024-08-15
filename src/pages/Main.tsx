@@ -50,7 +50,8 @@ export const Main = () => {
       return
     }
 
-    if (activeTicker) {
+    if (activeTicker && over) {
+    
       if (over === 'watched' && !crypto.getWatchedTickers().includes(activeTicker.symbol)) {
         // On dragging from unwatched => watched tickers droppable zone
         crypto.setWatchedTickers(p => [...p, activeTicker.symbol])
