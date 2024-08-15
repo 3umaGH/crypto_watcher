@@ -64,7 +64,7 @@ const OPTIONS = {
     },
     zoom: {
       pan: {
-        enabled: true,
+        enabled: false,
         mode: 'xy' as const,
       },
       zoom: {
@@ -72,7 +72,7 @@ const OPTIONS = {
           enabled: true,
         },
         pinch: {
-          enabled: false,
+          enabled: true,
         },
       },
     },
