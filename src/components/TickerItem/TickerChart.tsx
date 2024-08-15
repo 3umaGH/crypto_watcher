@@ -72,7 +72,7 @@ const OPTIONS = {
           enabled: true,
         },
         pinch: {
-          enabled: true,
+          enabled: false,
         },
       },
     },
