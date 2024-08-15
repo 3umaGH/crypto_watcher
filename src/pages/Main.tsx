@@ -51,7 +51,6 @@ export const Main = () => {
     }
 
     if (activeTicker && over) {
-    
       if (over === 'watched' && !crypto.getWatchedTickers().includes(activeTicker.symbol)) {
         // On dragging from unwatched => watched tickers droppable zone
         crypto.setWatchedTickers(p => [...p, activeTicker.symbol])
@@ -87,13 +86,13 @@ export const Main = () => {
   const sensors = useSensors(
     useSensor(MouseSensor, {
       activationConstraint: {
-        delay: 200,
+        delay: 0,
         tolerance: 10,
       },
     }),
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 200,
+        delay: 150,
         tolerance: 10,
       },
     })
